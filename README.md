@@ -24,3 +24,25 @@ A web application for managing SPIIK student association's physical inventory â€
 
 - Node.js (v18+)
 - MongoDB (running locally or a connection string)
+
+### Installation
+
+1. Clone the repository
+   git clone <repo-url>
+
+2. Install dependencies
+   npm install
+
+3. Create a .env file in the root folder
+   PORT=3000
+   MONGODB_URI=your-mongodb-connection-string
+   JWT_SECRET=your-secret-key
+
+4. Seed the database with test data
+   node seed.js
+
+5. Start the server
+   npm run dev
+
+6. Open your browser and go to
+   http://localhost:3000
