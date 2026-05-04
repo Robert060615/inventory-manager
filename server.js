@@ -10,6 +10,8 @@ import mongoose from 'mongoose'
 
 import indexRouter from './src/routes/index.js'
 import authRouter from './src/routes/auth.js'
+import productRouter from './src/routes/productRoutes.js'
+import inviteRouter from './src/routes/inviteRoutes.js'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
@@ -34,6 +36,8 @@ app.use(express.static(join(__dirname, 'public')))
 
 app.use('/', indexRouter)
 app.use('/auth', authRouter)
+app.use('/products', productRouter)
+app.use('/invite', inviteRouter)
 
 await mongoose.connect(process.env.MONGODB_URI)
 console.log('MongoDB connected')

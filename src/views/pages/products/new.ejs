@@ -1,0 +1,48 @@
+<div class="form-page">
+  <h1>Ny produkt</h1>
+
+  <% if (error) { %>
+    <div class="alert alert-error"><%= error %></div>
+  <% } %>
+
+  <form method="POST" action="/products">
+    <div class="form-group">
+      <label for="name">Namn</label>
+      <input type="text" id="name" name="name" value="<%= values.name || '' %>" required autofocus>
+    </div>
+
+    <div class="form-group">
+      <label for="category">Kategori</label>
+      <select id="category" name="category" required>
+        <option value="">Välj kategori</option>
+        <% categories.forEach(cat => { %>
+          <option value="<%= cat %>" <%= values.category === cat ? 'selected' : '' %>><%= cat %></option>
+        <% }) %>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="size">Storlek</label>
+      <select id="size" name="size">
+        <% sizes.forEach(s => { %>
+          <option value="<%= s %>" <%= values.size === s ? 'selected' : '' %>><%= s || '–' %></option>
+        <% }) %>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="quantity">Antal</label>
+      <input type="number" id="quantity" name="quantity" value="<%= values.quantity !== undefined ? values.quantity : 0 %>" min="0" required>
+    </div>
+
+    <div class="form-group">
+      <label for="image">Bild (URL eller sökväg, valfritt)</label>
+      <input type="text" id="image" name="image" value="<%= values.image || '' %>" placeholder="https://... eller /uploads/bild.jpg">
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">Skapa produkt</button>
+      <a href="/products" class="btn btn-secondary">Avbryt</a>
+    </div>
+  </form>
+</div>

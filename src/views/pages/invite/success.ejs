@@ -1,0 +1,27 @@
+<div class="form-page">
+  <h1>Inbjudan skapad</h1>
+  <p class="form-desc">En inbjudningslänk har skapats för <strong><%= email %></strong>. Länken är giltig i 48 timmar.</p>
+
+  <div class="invite-link-box">
+    <label>Kopiera och skicka denna länk:</label>
+    <div class="invite-link-row">
+      <input type="text" id="inviteUrl" value="<%= inviteUrl %>" readonly>
+      <button type="button" class="btn btn-secondary btn-sm" onclick="copyInviteUrl()">Kopiera</button>
+    </div>
+    <p class="invite-hint" id="copyMsg" style="display:none">Länken kopierades!</p>
+  </div>
+
+  <div class="form-actions">
+    <a href="/invite" class="btn btn-primary">Bjud in fler</a>
+    <a href="/products" class="btn btn-secondary">Tillbaka</a>
+  </div>
+</div>
+
+<script>
+function copyInviteUrl() {
+  const input = document.getElementById('inviteUrl')
+  input.select()
+  document.execCommand('copy')
+  document.getElementById('copyMsg').style.display = 'block'
+}
+</script>

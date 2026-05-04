@@ -1,0 +1,45 @@
+<div class="page-header">
+  <h1>Produkter</h1>
+  <a href="/products/new" class="btn btn-primary btn-sm">+ Ny produkt</a>
+</div>
+
+<form class="filter-form" method="GET" action="/products">
+  <select name="category" onchange="this.form.submit()">
+    <option value="">Alla kategorier</option>
+    <% categories.forEach(cat => { %>
+      <option value="<%= cat %>" <%= selectedCategory === cat ? 'selected' : '' %>><%= cat %></option>
+    <% }) %>
+  </select>
+</form>
+
+<% if (products.length === 0) { %>
+  <p class="empty-state">Inga produkter hittades.</p>
+<% } else { %>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Namn</th>
+        <th>Kategori</th>
+        <th>Storlek</th>
+        <th>Antal</th>
+        <th>Åtgärder</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% products.forEach(product => { %>
+        <tr>
+          <td><%= product.name %></td>
+          <td><%= product.category %></td>
+          <td><%= product.size || '–' %></td>
+          <td><%= product.quantity %></td>
+          <td class="actions">
+            <a href="/products/<%= product._id %>/edit" class="btn btn-secondary btn-sm">Redigera</a>
+            <form method="POST" action="/products/<%= product._id %>/delete" style="display:inline" onsubmit="return confirm('Ta bort produkt?')">
+              <button type="submit" class="btn btn-danger btn-sm">Ta bort</button>
+            </form>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+<% } %>

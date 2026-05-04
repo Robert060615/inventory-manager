@@ -11,6 +11,8 @@
     <span class="navbar-brand">SPIIK Inventariehanterare</span>
     <div class="navbar-links">
       <% if (locals.user) { %>
+        <a href="/products">Produkter</a>
+        <a href="/invite">Bjud in</a>
         <span class="nav-email"><%= user.email %></span>
         <a href="/auth/logout">Logga ut</a>
       <% } else { %>
