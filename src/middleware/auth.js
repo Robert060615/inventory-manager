@@ -1,3 +1,9 @@
+/**
+ * @file Authentication middleware — verifies JWT token from cookie and protects routes.
+ * @author Robert Minushi <rm222xi@student.lnu.se>
+ * @version v0.2.0
+ */
+
 import jwt from 'jsonwebtoken'
 
 function requireAuth(req, res, next) {

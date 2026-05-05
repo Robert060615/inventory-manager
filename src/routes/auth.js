@@ -1,3 +1,9 @@
+/**
+ * @file Authentication routes — login and logout endpoints.
+ * @author Robert Minushi <rm222xi@student.lnu.se>
+ * @version v0.2.0
+ */
+
 import { Router } from 'express'
 import { getLogin, postLogin, logout } from '../controllers/authController.js'
 

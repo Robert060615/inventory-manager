@@ -1,3 +1,9 @@
+/**
+ * @file Express application entry point — configures middleware, routes, and database connection.
+ * @author Robert Minushi <rm222xi@student.lnu.se>
+ * @version v0.3.0
+ */
+
 import 'dotenv/config'
 import express from 'express'
 import cookieParser from 'cookie-parser'

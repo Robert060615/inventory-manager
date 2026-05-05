@@ -1,3 +1,9 @@
+/**
+ * @file Mongoose model for inventory products.
+ * @author Robert Minushi <rm222xi@student.lnu.se>
+ * @version v0.3.0
+ */
+
 import mongoose from 'mongoose'
 
 const productSchema = new mongoose.Schema({

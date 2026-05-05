@@ -1,3 +1,9 @@
+/**
+ * @file Product routes — CRUD endpoints for inventory products.
+ * @author Robert Minushi <rm222xi@student.lnu.se>
+ * @version v0.3.0
+ */
+
 import { Router } from 'express'
 import requireAuth from '../middleware/auth.js'
 import {

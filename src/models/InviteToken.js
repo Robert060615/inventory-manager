@@ -1,3 +1,9 @@
+/**
+ * @file Mongoose model for user invite tokens.
+ * @author Robert Minushi <rm222xi@student.lnu.se>
+ * @version v0.3.0
+ */
+
 import mongoose from 'mongoose'
 
 const inviteTokenSchema = new mongoose.Schema({

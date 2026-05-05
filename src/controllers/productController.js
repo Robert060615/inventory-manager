@@ -1,3 +1,9 @@
+/**
+ * @file Product controller — handles CRUD operations for inventory products.
+ * @author Robert Minushi <rm222xi@student.lnu.se>
+ * @version v0.3.0
+ */
+
 import Product from '../models/Product.js'
 
 const CATEGORIES = ['Overall', 'Märke', 'Tröja', 'Övrigt']

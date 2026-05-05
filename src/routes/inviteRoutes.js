@@ -1,3 +1,9 @@
+/**
+ * @file Invite routes — endpoints for creating and accepting user invitations.
+ * @author Robert Minushi <rm222xi@student.lnu.se>
+ * @version v0.3.0
+ */
+
 import { Router } from 'express'
 import requireAuth from '../middleware/auth.js'
 import {
