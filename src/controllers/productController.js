@@ -7,7 +7,7 @@
 import Product from '../models/Product.js'
 
 const CATEGORIES = ['Overall', 'Märke', 'Tröja', 'Övrigt']
-const SIZES = ['', 'XS', 'S', 'M', 'L', 'XL']
+const SIZES = ['', 'XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL']
 
 export const getProducts = async (req, res) => {
   try {
@@ -46,7 +46,7 @@ export const postProduct = async (req, res) => {
   const { name, category, size, quantity, image } = req.body
 
   const errors = []
-  if (!name || !name.trim()) errors.push('Namn är obligatoriskt.')
+  if (category !== 'Overall' && (!name || !name.trim())) errors.push('Namn är obligatoriskt.')
   if (!category || !category.trim()) errors.push('Kategori är obligatorisk.')
   if (quantity === undefined || quantity === '' || Number(quantity) < 0) {
     errors.push('Antal måste vara 0 eller mer.')
@@ -64,7 +64,7 @@ export const postProduct = async (req, res) => {
 
   try {
     await Product.create({
-      name: name.trim(),
+      name: name ? name.trim() : '',
       category,
       size: size || '',
       quantity: Number(quantity),
@@ -105,7 +105,7 @@ export const postUpdateProduct = async (req, res) => {
   const { name, category, size, quantity, image } = req.body
 
   const errors = []
-  if (!name || !name.trim()) errors.push('Namn är obligatoriskt.')
+  if (category !== 'Overall' && (!name || !name.trim())) errors.push('Namn är obligatoriskt.')
   if (!category || !category.trim()) errors.push('Kategori är obligatorisk.')
   if (quantity === undefined || quantity === '' || Number(quantity) < 0) {
     errors.push('Antal måste vara 0 eller mer.')
@@ -130,7 +130,7 @@ export const postUpdateProduct = async (req, res) => {
 
   try {
     await Product.findByIdAndUpdate(req.params.id, {
-      name: name.trim(),
+      name: name ? name.trim() : '',
       category,
       size: size || '',
       quantity: Number(quantity),

@@ -6,14 +6,14 @@
   <% } %>
 
   <form method="POST" action="/products">
-    <div class="form-group">
+    <div class="form-group" id="name-group">
       <label for="name">Namn</label>
-      <input type="text" id="name" name="name" value="<%= values.name || '' %>" required autofocus>
+      <input type="text" id="name" name="name" value="<%= values.name || '' %>" autofocus>
     </div>
 
     <div class="form-group">
       <label for="category">Kategori</label>
-      <select id="category" name="category" required>
+      <select id="category" name="category" required onchange="toggleName(this.value)">
         <option value="">Välj kategori</option>
         <% categories.forEach(cat => { %>
           <option value="<%= cat %>" <%= values.category === cat ? 'selected' : '' %>><%= cat %></option>
@@ -46,3 +46,15 @@
     </div>
   </form>
 </div>
+
+<script>
+  function toggleName(category) {
+    const group = document.getElementById('name-group')
+    const input = document.getElementById('name')
+    const isOverall = category === 'Overall'
+    group.style.display = isOverall ? 'none' : ''
+    input.required = !isOverall
+    if (isOverall) input.value = ''
+  }
+  toggleName('<%= values.category || '' %>')
+</script>
