@@ -5,6 +5,9 @@
  */
 
 import Product from '../models/Product.js'
+import ProductHistory from '../models/ProductHistory.js'
+
+const TRACKED_FIELDS = ['name', 'category', 'size', 'quantity', 'image']
 
 const CATEGORIES = ['Overall', 'Märke', 'Tröja', 'Övrigt']
 const SIZES = ['', 'XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL']
@@ -63,12 +66,20 @@ export const postProduct = async (req, res) => {
   }
 
   try {
-    await Product.create({
+    const product = await Product.create({
       name: name ? name.trim() : '',
       category,
       size: size || '',
       quantity: Number(quantity),
       image: image || ''
+    })
+    await ProductHistory.create({
+      productId: product._id,
+      productName: product.name || product.category,
+      action: 'create',
+      performedBy: { userId: res.locals.user.id, email: res.locals.user.email },
+      changes: [],
+      snapshot: null
     })
     res.redirect('/products')
   } catch (err) {
@@ -129,13 +140,39 @@ export const postUpdateProduct = async (req, res) => {
   }
 
   try {
-    await Product.findByIdAndUpdate(req.params.id, {
+    const existing = await Product.findById(req.params.id)
+    if (!existing) return res.redirect('/products')
+
+    const newValues = {
       name: name ? name.trim() : '',
       category,
       size: size || '',
       quantity: Number(quantity),
       image: image || ''
-    })
+    }
+
+    const changes = []
+    for (const field of TRACKED_FIELDS) {
+      const oldVal = existing[field]
+      const newVal = newValues[field]
+      if (oldVal !== newVal) {
+        changes.push({ field, oldValue: oldVal, newValue: newVal })
+      }
+    }
+
+    await Product.findByIdAndUpdate(req.params.id, newValues)
+
+    if (changes.length) {
+      await ProductHistory.create({
+        productId: existing._id,
+        productName: newValues.name || newValues.category,
+        action: 'update',
+        performedBy: { userId: res.locals.user.id, email: res.locals.user.email },
+        changes,
+        snapshot: null
+      })
+    }
+
     res.redirect('/products')
   } catch (err) {
     console.error(err)
@@ -145,7 +182,18 @@ export const postUpdateProduct = async (req, res) => {
 
 export const postDeleteProduct = async (req, res) => {
   try {
-    await Product.findByIdAndDelete(req.params.id)
+    const product = await Product.findById(req.params.id)
+    if (product) {
+      await ProductHistory.create({
+        productId: product._id,
+        productName: product.name || product.category,
+        action: 'delete',
+        performedBy: { userId: res.locals.user.id, email: res.locals.user.email },
+        changes: [],
+        snapshot: product.toObject()
+      })
+      await product.deleteOne()
+    }
   } catch (err) {
     console.error(err)
   }

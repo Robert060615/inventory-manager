@@ -1,0 +1,93 @@
+<div class="page-header">
+  <h1>Ändringshistorik</h1>
+  <a href="/products" class="btn btn-secondary btn-sm">← Produkter</a>
+</div>
+
+<%
+  const fieldLabels = {
+    name: 'Namn',
+    category: 'Kategori',
+    size: 'Storlek',
+    quantity: 'Antal',
+    image: 'Bild'
+  }
+%>
+
+<form class="filter-form" method="GET" action="/history">
+  <select name="productId" onchange="this.form.submit()">
+    <option value="">Alla produkter</option>
+    <% products.forEach(p => { %>
+      <option value="<%= p._id %>" <%= selectedProductId === String(p._id) ? 'selected' : '' %>>
+        <%= p.name || p.category %>
+      </option>
+    <% }) %>
+  </select>
+</form>
+
+<% if (entries.length === 0) { %>
+  <p class="empty-state">Inga ändringar hittades.</p>
+<% } else { %>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Datum/tid</th>
+        <th>Användare</th>
+        <th>Produkt</th>
+        <th>Händelse</th>
+        <th>Fält</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% entries.forEach(entry => { %>
+        <tr>
+          <td class="nowrap">
+            <%= new Date(entry.createdAt).toLocaleString('sv-SE', { dateStyle: 'short', timeStyle: 'short' }) %>
+          </td>
+          <td>
+            <%= entry.performedBy && entry.performedBy.email ? entry.performedBy.email : '–' %>
+          </td>
+          <td>
+            <a href="/history/product/<%= entry.productId %>">
+              <%= entry.productName || '–' %>
+            </a>
+          </td>
+          <td>
+            <% if (entry.action === 'create') { %>
+              <span class="badge badge-create">Skapad</span>
+            <% } else if (entry.action === 'update') { %>
+              <span class="badge badge-update">Ändrad</span>
+            <% } else { %>
+              <span class="badge badge-delete">Borttagen</span>
+            <% } %>
+          </td>
+          <td>
+            <% if (entry.changes && entry.changes.length > 0) { %>
+              <ul class="change-list">
+                <% entry.changes.forEach(c => { %>
+                  <li>
+                    <strong><%= fieldLabels[c.field] || c.field %></strong>:
+                    <span class="old-val"><%= (c.oldValue !== undefined && c.oldValue !== '') ? c.oldValue : '–' %></span>
+                    →
+                    <span class="new-val"><%= (c.newValue !== undefined && c.newValue !== '') ? c.newValue : '–' %></span>
+                  </li>
+                <% }) %>
+              </ul>
+            <% } else if (entry.action === 'create') { %>
+              <span class="muted">Ny produkt skapad</span>
+            <% } else if (entry.action === 'delete') { %>
+              <span class="muted">Produkt borttagen</span>
+            <% } %>
+          </td>
+          <td>
+            <button
+              class="btn btn-secondary btn-sm"
+              disabled
+              title="Ångra – implementeras i nästa iteration"
+            >Ångra</button>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+<% } %>

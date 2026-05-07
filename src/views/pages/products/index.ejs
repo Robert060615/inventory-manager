@@ -34,6 +34,7 @@
           <td><%= product.quantity %></td>
           <td class="actions">
             <a href="/products/<%= product._id %>/edit" class="btn btn-secondary btn-sm">Redigera</a>
+            <a href="/history/product/<%= product._id %>" class="btn btn-secondary btn-sm">Historik</a>
             <form method="POST" action="/products/<%= product._id %>/delete" style="display:inline" onsubmit="return confirm('Ta bort produkt?')">
               <button type="submit" class="btn btn-danger btn-sm">Ta bort</button>
             </form>

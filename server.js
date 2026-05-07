@@ -18,6 +18,7 @@ import indexRouter from './src/routes/index.js'
 import authRouter from './src/routes/auth.js'
 import productRouter from './src/routes/productRoutes.js'
 import inviteRouter from './src/routes/inviteRoutes.js'
+import historyRouter from './src/routes/historyRoutes.js'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
@@ -44,6 +45,7 @@ app.use('/', indexRouter)
 app.use('/auth', authRouter)
 app.use('/products', productRouter)
 app.use('/invite', inviteRouter)
+app.use('/history', historyRouter)
 
 await mongoose.connect(process.env.MONGODB_URI)
 console.log('MongoDB connected')
