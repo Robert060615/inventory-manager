@@ -16,36 +16,36 @@ import mongoose from 'mongoose'
 const changeSchema = new mongoose.Schema({
   field: String,
   oldValue: mongoose.Schema.Types.Mixed,
-  newValue: mongoose.Schema.Types.Mixed
+  newValue: mongoose.Schema.Types.Mixed,
 }, { _id: false })
 
 const productHistorySchema = new mongoose.Schema({
   productId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Product',
-    required: true
+    required: true,
   },
   // Cached so deleted products still have a readable name in the history log.
   productName: {
     type: String,
-    default: ''
+    default: '',
   },
   action: {
     type: String,
     enum: ['create', 'update', 'delete'],
-    required: true
+    required: true,
   },
   performedBy: {
     userId: String,
-    email: String
+    email: String,
   },
   // Populated for 'update' entries — only fields that actually changed.
   changes: [changeSchema],
   // Full document snapshot saved on 'delete' to support future undo.
   snapshot: {
     type: mongoose.Schema.Types.Mixed,
-    default: null
-  }
+    default: null,
+  },
 }, { timestamps: true })
 
 export default mongoose.model('ProductHistory', productHistorySchema)

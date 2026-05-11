@@ -12,6 +12,12 @@ const TRACKED_FIELDS = ['name', 'category', 'size', 'quantity', 'image']
 const CATEGORIES = ['Overall', 'Märke', 'Tröja', 'Övrigt']
 const SIZES = ['', 'XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL']
 
+/**
+ * Renders the product list, optionally filtered by category.
+ *
+ * @param {object} req - Express request object.
+ * @param {object} res - Express response object.
+ */
 export const getProducts = async (req, res) => {
   try {
     const { category } = req.query
@@ -21,7 +27,7 @@ export const getProducts = async (req, res) => {
       title: 'Produkter',
       products,
       selectedCategory: category || '',
-      categories: CATEGORIES
+      categories: CATEGORIES,
     })
   } catch (err) {
     console.error(err)
@@ -29,11 +35,17 @@ export const getProducts = async (req, res) => {
       title: 'Produkter',
       products: [],
       selectedCategory: '',
-      categories: CATEGORIES
+      categories: CATEGORIES,
     })
   }
 }
 
+/**
+ * Renders the new product form.
+ *
+ * @param {object} req - Express request object.
+ * @param {object} res - Express response object.
+ */
 export const getNewProduct = (req, res) => {
   const error = req.flash('error')[0] || null
   res.render('pages/products/new', {
@@ -41,10 +53,17 @@ export const getNewProduct = (req, res) => {
     error,
     values: {},
     categories: CATEGORIES,
-    sizes: SIZES
+    sizes: SIZES,
   })
 }
 
+/**
+ * Handles new product form submission and creates the product.
+ *
+ * @param {object} req - Express request object.
+ * @param {object} res - Express response object.
+ * @returns {void}
+ */
 export const postProduct = async (req, res) => {
   const { name, category, size, quantity, image } = req.body
 
@@ -61,7 +80,7 @@ export const postProduct = async (req, res) => {
       error: errors[0],
       values: { name, category, size, quantity, image },
       categories: CATEGORIES,
-      sizes: SIZES
+      sizes: SIZES,
     })
   }
 
@@ -71,7 +90,7 @@ export const postProduct = async (req, res) => {
       category,
       size: size || '',
       quantity: Number(quantity),
-      image: image || ''
+      image: image || '',
     })
     await ProductHistory.create({
       productId: product._id,
@@ -79,39 +98,53 @@ export const postProduct = async (req, res) => {
       action: 'create',
       performedBy: { userId: res.locals.user.id, email: res.locals.user.email },
       changes: [],
-      snapshot: null
+      snapshot: null,
     })
-    res.redirect('/products')
+    return res.redirect('/products')
   } catch (err) {
     console.error(err)
-    res.render('pages/products/new', {
+    return res.render('pages/products/new', {
       title: 'Ny produkt',
       error: 'Ett fel uppstod. Försök igen.',
       values: { name, category, size, quantity, image },
       categories: CATEGORIES,
-      sizes: SIZES
+      sizes: SIZES,
     })
   }
 }
 
+/**
+ * Renders the edit product form for a given product ID.
+ *
+ * @param {object} req - Express request object.
+ * @param {object} res - Express response object.
+ * @returns {void}
+ */
 export const getEditProduct = async (req, res) => {
   try {
     const product = await Product.findById(req.params.id)
     if (!product) return res.redirect('/products')
     const error = req.flash('error')[0] || null
-    res.render('pages/products/edit', {
+    return res.render('pages/products/edit', {
       title: 'Redigera produkt',
       error,
       product,
       categories: CATEGORIES,
-      sizes: SIZES
+      sizes: SIZES,
     })
   } catch (err) {
     console.error(err)
-    res.redirect('/products')
+    return res.redirect('/products')
   }
 }
 
+/**
+ * Handles product edit form submission and saves changes with a history entry.
+ *
+ * @param {object} req - Express request object.
+ * @param {object} res - Express response object.
+ * @returns {void}
+ */
 export const postUpdateProduct = async (req, res) => {
   const { name, category, size, quantity, image } = req.body
 
@@ -132,10 +165,10 @@ export const postUpdateProduct = async (req, res) => {
         category,
         size: size || '',
         quantity: quantity !== undefined ? quantity : 0,
-        image: image || ''
+        image: image || '',
       },
       categories: CATEGORIES,
-      sizes: SIZES
+      sizes: SIZES,
     })
   }
 
@@ -148,7 +181,7 @@ export const postUpdateProduct = async (req, res) => {
       category,
       size: size || '',
       quantity: Number(quantity),
-      image: image || ''
+      image: image || '',
     }
 
     const changes = []
@@ -169,17 +202,23 @@ export const postUpdateProduct = async (req, res) => {
         action: 'update',
         performedBy: { userId: res.locals.user.id, email: res.locals.user.email },
         changes,
-        snapshot: null
+        snapshot: null,
       })
     }
 
-    res.redirect('/products')
+    return res.redirect('/products')
   } catch (err) {
     console.error(err)
-    res.redirect('/products')
+    return res.redirect('/products')
   }
 }
 
+/**
+ * Deletes a product and logs a history entry before removal.
+ *
+ * @param {object} req - Express request object.
+ * @param {object} res - Express response object.
+ */
 export const postDeleteProduct = async (req, res) => {
   try {
     const product = await Product.findById(req.params.id)
@@ -190,7 +229,7 @@ export const postDeleteProduct = async (req, res) => {
         action: 'delete',
         performedBy: { userId: res.locals.user.id, email: res.locals.user.email },
         changes: [],
-        snapshot: product.toObject()
+        snapshot: product.toObject(),
       })
       await product.deleteOne()
     }

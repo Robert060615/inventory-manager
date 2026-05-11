@@ -6,6 +6,14 @@
 
 import jwt from 'jsonwebtoken'
 
+/**
+ * Verifies the JWT cookie and attaches the decoded user to res.locals.
+ *
+ * @param {object} req - Express request object.
+ * @param {object} res - Express response object.
+ * @param {function(): void} next - Express next middleware function.
+ * @returns {void}
+ */
 function requireAuth(req, res, next) {
   const token = req.cookies.token
 
@@ -16,10 +24,10 @@ function requireAuth(req, res, next) {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET)
     res.locals.user = decoded
-    next()
+    return next()
   } catch {
     res.clearCookie('token')
-    res.redirect('/auth/login')
+    return res.redirect('/auth/login')
   }
 }
 

@@ -9,11 +9,24 @@ import bcrypt from 'bcryptjs'
 import User from '../models/User.js'
 import InviteToken from '../models/InviteToken.js'
 
+/**
+ * Renders the invite user form.
+ *
+ * @param {object} req - Express request object.
+ * @param {object} res - Express response object.
+ */
 export const getInvite = (req, res) => {
   const error = req.flash('error')[0] || null
   res.render('pages/invite/index', { title: 'Bjud in användare', error })
 }
 
+/**
+ * Handles invite form submission and creates a time-limited invite token.
+ *
+ * @param {object} req - Express request object.
+ * @param {object} res - Express response object.
+ * @returns {void}
+ */
 export const postInvite = async (req, res) => {
   const { email } = req.body
 
@@ -36,22 +49,29 @@ export const postInvite = async (req, res) => {
       token,
       email: email.toLowerCase().trim(),
       createdBy: res.locals.user.id,
-      expiresAt
+      expiresAt,
     })
 
     const inviteUrl = `${req.protocol}://${req.get('host')}/invite/accept/${token}`
-    res.render('pages/invite/success', {
+    return res.render('pages/invite/success', {
       title: 'Inbjudan skapad',
       inviteUrl,
-      email: email.toLowerCase().trim()
+      email: email.toLowerCase().trim(),
     })
   } catch (err) {
     console.error(err)
     req.flash('error', 'Ett fel uppstod. Försök igen.')
-    res.redirect('/invite')
+    return res.redirect('/invite')
   }
 }
 
+/**
+ * Renders the accept-invite page for a given token.
+ *
+ * @param {object} req - Express request object.
+ * @param {object} res - Express response object.
+ * @returns {void}
+ */
 export const getAcceptInvite = async (req, res) => {
   const { token } = req.params
   try {
@@ -60,21 +80,28 @@ export const getAcceptInvite = async (req, res) => {
       return res.render('pages/invite/accept', {
         title: 'Ogiltig inbjudan',
         invite: null,
-        error: 'Inbjudningslänken är ogiltig eller har gått ut.'
+        error: 'Inbjudningslänken är ogiltig eller har gått ut.',
       })
     }
     const error = req.flash('error')[0] || null
-    res.render('pages/invite/accept', { title: 'Skapa konto', invite, error })
+    return res.render('pages/invite/accept', { title: 'Skapa konto', invite, error })
   } catch (err) {
     console.error(err)
-    res.render('pages/invite/accept', {
+    return res.render('pages/invite/accept', {
       title: 'Ogiltig inbjudan',
       invite: null,
-      error: 'Ett fel uppstod.'
+      error: 'Ett fel uppstod.',
     })
   }
 }
 
+/**
+ * Handles account creation from a valid invite token.
+ *
+ * @param {object} req - Express request object.
+ * @param {object} res - Express response object.
+ * @returns {void}
+ */
 export const postAcceptInvite = async (req, res) => {
   const { token } = req.params
   const { password } = req.body
@@ -90,7 +117,7 @@ export const postAcceptInvite = async (req, res) => {
       return res.render('pages/invite/accept', {
         title: 'Ogiltig inbjudan',
         invite: null,
-        error: 'Inbjudningslänken är ogiltig eller har gått ut.'
+        error: 'Inbjudningslänken är ogiltig eller har gått ut.',
       })
     }
 
@@ -99,10 +126,10 @@ export const postAcceptInvite = async (req, res) => {
     invite.used = true
     await invite.save()
 
-    res.redirect('/auth/login')
+    return res.redirect('/auth/login')
   } catch (err) {
     console.error(err)
     req.flash('error', 'Ett fel uppstod. Försök igen.')
-    res.redirect(`/invite/accept/${token}`)
+    return res.redirect(`/invite/accept/${token}`)
   }
 }

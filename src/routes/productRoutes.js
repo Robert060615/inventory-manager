@@ -12,7 +12,7 @@ import {
   postProduct,
   getEditProduct,
   postUpdateProduct,
-  postDeleteProduct
+  postDeleteProduct,
 } from '../controllers/productController.js'
 
 const router = Router()

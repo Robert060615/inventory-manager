@@ -10,26 +10,26 @@ const inviteTokenSchema = new mongoose.Schema({
   token: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
   },
   email: {
     type: String,
     required: true,
     lowercase: true,
-    trim: true
+    trim: true,
   },
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'User',
   },
   expiresAt: {
     type: Date,
-    required: true
+    required: true,
   },
   used: {
     type: Boolean,
-    default: false
-  }
+    default: false,
+  },
 })
 
 export default mongoose.model('InviteToken', inviteTokenSchema)

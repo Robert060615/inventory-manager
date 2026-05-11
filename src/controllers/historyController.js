@@ -7,6 +7,12 @@
 import ProductHistory from '../models/ProductHistory.js'
 import Product from '../models/Product.js'
 
+/**
+ * Renders the full product change history log, optionally filtered by product.
+ *
+ * @param {object} req - Express request object.
+ * @param {object} res - Express response object.
+ */
 export const getHistory = async (req, res) => {
   try {
     const { productId } = req.query
@@ -17,7 +23,7 @@ export const getHistory = async (req, res) => {
       title: 'Ändringshistorik',
       entries,
       products,
-      selectedProductId: productId || ''
+      selectedProductId: productId || '',
     })
   } catch (err) {
     console.error(err)
@@ -25,11 +31,17 @@ export const getHistory = async (req, res) => {
       title: 'Ändringshistorik',
       entries: [],
       products: [],
-      selectedProductId: ''
+      selectedProductId: '',
     })
   }
 }
 
+/**
+ * Renders the change history for a single product.
+ *
+ * @param {object} req - Express request object.
+ * @param {object} res - Express response object.
+ */
 export const getProductHistory = async (req, res) => {
   try {
     const { id } = req.params
@@ -39,7 +51,7 @@ export const getProductHistory = async (req, res) => {
       title: 'Produkthistorik',
       entries,
       products,
-      selectedProductId: id
+      selectedProductId: id,
     })
   } catch (err) {
     console.error(err)
@@ -47,7 +59,7 @@ export const getProductHistory = async (req, res) => {
       title: 'Produkthistorik',
       entries: [],
       products: [],
-      selectedProductId: req.params.id
+      selectedProductId: req.params.id,
     })
   }
 }

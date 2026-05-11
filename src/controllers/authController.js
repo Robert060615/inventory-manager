@@ -8,11 +8,24 @@ import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import User from '../models/User.js'
 
+/**
+ * Renders the login page.
+ *
+ * @param {object} req - Express request object.
+ * @param {object} res - Express response object.
+ */
 export const getLogin = (req, res) => {
   const error = req.flash('error')[0] || null
   res.render('pages/login', { title: 'Logga in', error })
 }
 
+/**
+ * Handles login form submission and issues a JWT cookie on success.
+ *
+ * @param {object} req - Express request object.
+ * @param {object} res - Express response object.
+ * @returns {void}
+ */
 export const postLogin = async (req, res) => {
   const { email, password } = req.body
 
@@ -41,18 +54,24 @@ export const postLogin = async (req, res) => {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'strict',
-      maxAge: 8 * 60 * 60 * 1000
+      maxAge: 8 * 60 * 60 * 1000,
     })
 
-    res.redirect('/')
+    return res.redirect('/')
   } catch (err) {
     console.error(err)
     req.flash('error', 'Ett fel uppstod. Försök igen.')
-    res.redirect('/auth/login')
+    return res.redirect('/auth/login')
   }
 }
 
-export const logout = (req, res) => {
+/**
+ * Clears the JWT cookie and redirects to the login page.
+ *
+ * @param {object} _req - Express request object (unused).
+ * @param {object} res - Express response object.
+ */
+export const logout = (_req, res) => {
   res.clearCookie('token')
   res.redirect('/auth/login')
 }

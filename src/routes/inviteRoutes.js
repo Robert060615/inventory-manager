@@ -10,7 +10,7 @@ import {
   getInvite,
   postInvite,
   getAcceptInvite,
-  postAcceptInvite
+  postAcceptInvite,
 } from '../controllers/inviteController.js'
 
 const router = Router()
