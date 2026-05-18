@@ -1,0 +1,32 @@
+stages:
+  - install
+  - lint
+  - test
+
+default:
+  image: node:20
+
+install:
+  stage: install
+  script:
+    - npm ci
+  artifacts:
+    paths:
+      - node_modules/
+    expire_in: 1 day
+
+lint:
+  stage: lint
+  script:
+    - npx eslint .
+  needs:
+    - job: install
+      artifacts: true
+
+test:
+  stage: test
+  script:
+    - npm test
+  needs:
+    - job: install
+      artifacts: true

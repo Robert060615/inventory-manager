@@ -6,7 +6,7 @@
 
 import { Router } from 'express'
 import requireAuth from '../middleware/auth.js'
-import { getHistory, getProductHistory } from '../controllers/historyController.js'
+import { getHistory, getProductHistory, undoChange } from '../controllers/historyController.js'
 
 const router = Router()
 
@@ -14,5 +14,6 @@ router.use(requireAuth)
 
 router.get('/', getHistory)
 router.get('/product/:id', getProductHistory)
+router.post('/:id/undo', undoChange)
 
 export default router

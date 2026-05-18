@@ -3,6 +3,13 @@
   <a href="/products" class="btn btn-secondary btn-sm">← Produkter</a>
 </div>
 
+<% if (locals.success) { %>
+  <div class="alert alert-success"><%= success %></div>
+<% } %>
+<% if (locals.error) { %>
+  <div class="alert alert-error"><%= error %></div>
+<% } %>
+
 <%
   const fieldLabels = {
     name: 'Namn',
@@ -80,11 +87,9 @@
             <% } %>
           </td>
           <td>
-            <button
-              class="btn btn-secondary btn-sm"
-              disabled
-              title="Ångra – implementeras i nästa iteration"
-            >Ångra</button>
+            <form method="POST" action="/history/<%= entry._id %>/undo" style="display:inline" onsubmit="return confirm('Ångra denna ändring?')">
+              <button type="submit" class="btn btn-secondary btn-sm">Ångra</button>
+            </form>
           </td>
         </tr>
       <% }) %>
