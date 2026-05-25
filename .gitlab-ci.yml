@@ -4,7 +4,7 @@ stages:
   - test
 
 default:
-  image: node:20
+  image: node:24
 
 # Casha MongoDB-binären som mongodb-memory-server laddar ner.
 # Nyckel på branch-namn så att olika branches delar cache.
