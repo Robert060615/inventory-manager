@@ -6,6 +6,13 @@ stages:
 default:
   image: node:20
 
+# Casha MongoDB-binären som mongodb-memory-server laddar ner.
+# Nyckel på branch-namn så att olika branches delar cache.
+cache:
+  key: "$CI_COMMIT_REF_SLUG"
+  paths:
+    - .cache/mongodb-binaries/
+
 install:
   stage: install
   script:
@@ -25,6 +32,10 @@ lint:
 
 test:
   stage: test
+  # MONGOMS_DOWNLOAD_DIR matchar mongodbMemoryServer.downloadDir i package.json
+  # och pekar på den cachade katalogen.
+  variables:
+    MONGOMS_DOWNLOAD_DIR: ".cache/mongodb-binaries"
   script:
     - npm test
   needs:
