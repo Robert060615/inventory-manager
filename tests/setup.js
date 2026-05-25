@@ -21,6 +21,14 @@ let mongod
 beforeAll(async () => {
   mongod = await MongoMemoryServer.create()
   await mongoose.connect(mongod.getUri())
+
+  // Mongoose skapar index asynkront via autoIndex och garanterar inte att de
+  // finns innan det första anropet. I CI (långsammare miljö) hann indexet inte
+  // skapas, vilket gjorde att unique-constraint-testet inte kastade fel.
+  // Vänta explicit på att alla registrerade modellers index är på plats.
+  await Promise.all(
+    mongoose.modelNames().map((name) => mongoose.model(name).createIndexes())
+  )
 }, 60000)
 
 // Rensa alla collections efter varje test så att tester är oberoende av
