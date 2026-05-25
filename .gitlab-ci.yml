@@ -16,7 +16,11 @@ cache:
 install:
   stage: install
   script:
-    - npm ci
+    # npm install används istället för npm ci eftersom package-lock.json
+    # genereras på Windows och saknar Linux-specifika optionella beroenden
+    # (bl.a. @emnapi/core, @emnapi/runtime som rollup/vitest drar in på Linux).
+    # npm install respekterar lock-filen men kompletterar med plattformsberoenden.
+    - npm install
   artifacts:
     paths:
       - node_modules/
