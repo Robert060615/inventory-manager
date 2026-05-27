@@ -1,5 +1,5 @@
 node_modules/
 .env
 docs
-seeds
+seeds/seed.js
 .gitignore
