@@ -7,7 +7,7 @@ A web application for managing SPIIK student association's physical inventory �
 - **Product management** – Add, edit, and delete products with attributes like name, category, size, and quantity
 - **Change history** – Every update is logged with who changed what, when, and the old vs new value
 - **Undo changes** – Revert any logged change to restore the previous value
-- **Access control** – No public registration; new users are invited by existing board members
+- **Access control** – No public registration; new users are invited by existing board members via time-limited invite links
 - **Dashboard** – Overview of current inventory with warnings for low or zero stock
 
 ## Tech stack
@@ -16,33 +16,54 @@ A web application for managing SPIIK student association's physical inventory �
 - **Database:** MongoDB, Mongoose
 - **Frontend:** EJS (server-rendered templates)
 - **Auth:** JWT (httpOnly cookies), bcrypt
-- **Deployment:** Ubuntu/Cumulus, Nginx, Let's Encrypt
+- **Testing:** Vitest, Supertest, MongoDB Memory Server
+- **Deployment:** Vercel
 
 ## Getting started
 
 ### Prerequisites
 
-- Node.js (v18+)
-- MongoDB (running locally or a connection string)
+- Node.js v18+
+- MongoDB (local instance or a MongoDB Atlas connection string)
 
 ### Installation
 
-1. Clone the repository
-   git clone <repo-url>
+```bash
+# 1. Clone the repository
+git clone <repo-url>
+cd inventariehanterare
 
-2. Install dependencies
-   npm install
+# 2. Install dependencies
+npm install
 
-3. Create a .env file in the root folder
-   PORT=3000
-   MONGODB_URI=your-mongodb-connection-string
-   JWT_SECRET=your-secret-key
+# 3. Configure environment variables
+cp .env.example .env
+# Edit .env and fill in MONGODB_URI and JWT_SECRET
 
-4. Seed the database with test data
-   node seed.js
+# 4. Seed the database with an initial admin user
+#    Copy seeds/seed.example.js to seeds/seed.js, fill in credentials, then:
+npm run seed
 
-5. Start the server
-   npm run dev
+# 5. Start the development server
+npm run dev
+```
 
-6. Open your browser and go to
-   http://localhost:3000
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## Running tests
+
+```bash
+npm test
+```
+
+Tests use an in-memory MongoDB instance — no external database required.
+
+## Scripts
+
+| Command | Description |
+|---|---|
+| `npm start` | Start the production server |
+| `npm run dev` | Start the server with auto-reload (nodemon) |
+| `npm test` | Run the test suite (Vitest) |
+| `npm run lint` | Run ESLint |
+| `npm run seed` | Seed the database with an initial admin user |

@@ -11,7 +11,7 @@ import mongoose from 'mongoose'
 // methods used in productController (findByIdAndUpdate, findByIdAndDelete).
 // They also lack clean built-in userId tracking. A custom model gives us
 // full control over the schema, explicit userId capture, and a clean snapshot
-// field for the future undo feature.
+// field for the undo feature.
 
 const changeSchema = new mongoose.Schema({
   field: String,
