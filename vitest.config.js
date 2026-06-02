@@ -1,7 +1,7 @@
 /**
  * @file Vitest configuration.
  * @author Robert Minushi <rm222xi@student.lnu.se>
- * @version v0.1.0
+ * @version v1.0.0
  */
 
 import { defineConfig } from 'vitest/config'

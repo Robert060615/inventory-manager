@@ -8,7 +8,7 @@
  * inte har ett fritext-namn. Namnvalidering sker i productController, inte i
  * Mongoose-schemat. Det testas i integrationstesterna.
  * @author Robert Minushi <rm222xi@student.lnu.se>
- * @version v0.1.0
+ * @version v1.0.0
  */
 
 import { describe, it, expect } from 'vitest'

@@ -40,6 +40,7 @@
         <th>Datum/tid</th>
         <th>Användare</th>
         <th>Produkt</th>
+        <th>Storlek</th>
         <th>Händelse</th>
         <th>Fält</th>
         <th></th>
@@ -59,6 +60,7 @@
               <%= entry.productName || '–' %>
             </a>
           </td>
+          <td><%= entry.productSize || '–' %></td>
           <td>
             <% if (entry.action === 'create') { %>
               <span class="badge badge-create">Skapad</span>

@@ -3,7 +3,7 @@
  *       Exporterar app-instansen utan att koppla upp mot databasen eller
  *       starta en HTTP-lyssnare, så att supertest kan importera appen direkt.
  * @author Robert Minushi <rm222xi@student.lnu.se>
- * @version v0.4.0
+ * @version v1.0.0
  */
 
 import express from 'express'

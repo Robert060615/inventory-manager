@@ -5,7 +5,7 @@
  * En testanvändare skapas i beforeEach med bcrypt-hashat lösenord och
  * rensas av afterEach i setup.js.
  * @author Robert Minushi <rm222xi@student.lnu.se>
- * @version v0.1.0
+ * @version v1.0.0
  */
 
 import { describe, it, expect, beforeEach } from 'vitest'

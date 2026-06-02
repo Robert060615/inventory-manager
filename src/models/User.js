@@ -1,7 +1,7 @@
 /**
  * @file Mongoose model for application users.
  * @author Robert Minushi <rm222xi@student.lnu.se>
- * @version v0.2.0
+ * @version v1.0.0
  */
 
 import mongoose from 'mongoose'

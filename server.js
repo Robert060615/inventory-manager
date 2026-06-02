@@ -2,7 +2,7 @@
  * @file Server entry point — laddar miljövariabler, kopplar upp mot databasen
  *       och startar HTTP-lyssnaren.
  * @author Robert Minushi <rm222xi@student.lnu.se>
- * @version v0.4.0
+ * @version v1.0.0
  */
 
 import 'dotenv/config'

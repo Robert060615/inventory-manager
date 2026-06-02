@@ -4,7 +4,7 @@
  * Testar Mongoose-schemat direkt — utan att gå via controllers eller HTTP.
  * Databasen tillhandahålls av MongoMemoryServer (se tests/setup.js).
  * @author Robert Minushi <rm222xi@student.lnu.se>
- * @version v0.1.0
+ * @version v1.0.0
  */
 
 import { describe, it, expect } from 'vitest'

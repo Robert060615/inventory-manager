@@ -1,7 +1,7 @@
 /**
  * @file Product controller — handles CRUD operations for inventory products.
  * @author Robert Minushi <rm222xi@student.lnu.se>
- * @version v0.3.0
+ * @version v1.0.0
  */
 
 import Product from '../models/Product.js'
@@ -95,6 +95,7 @@ export const postProduct = async (req, res) => {
     await ProductHistory.create({
       productId: product._id,
       productName: product.name || product.category,
+      productSize: product.size || '',
       action: 'create',
       performedBy: { userId: res.locals.user.id, email: res.locals.user.email },
       changes: [],
@@ -199,6 +200,7 @@ export const postUpdateProduct = async (req, res) => {
       await ProductHistory.create({
         productId: existing._id,
         productName: newValues.name || newValues.category,
+        productSize: newValues.size || '',
         action: 'update',
         performedBy: { userId: res.locals.user.id, email: res.locals.user.email },
         changes,
@@ -226,6 +228,7 @@ export const postDeleteProduct = async (req, res) => {
       await ProductHistory.create({
         productId: product._id,
         productName: product.name || product.category,
+        productSize: product.size || '',
         action: 'delete',
         performedBy: { userId: res.locals.user.id, email: res.locals.user.email },
         changes: [],

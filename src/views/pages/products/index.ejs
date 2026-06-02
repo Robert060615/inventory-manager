@@ -18,6 +18,7 @@
   <table class="table">
     <thead>
       <tr>
+        <th>Bild</th>
         <th>Namn</th>
         <th>Kategori</th>
         <th>Storlek</th>
@@ -28,6 +29,13 @@
     <tbody>
       <% products.forEach(product => { %>
         <tr>
+          <td>
+            <% if (product.image) { %>
+              <img src="<%= product.image %>" alt="<%= product.name %>" style="width:48px;height:48px;object-fit:cover;border-radius:4px;">
+            <% } else { %>
+              –
+            <% } %>
+          </td>
           <td><%= product.name %></td>
           <td><%= product.category %></td>
           <td><%= product.size || '–' %></td>

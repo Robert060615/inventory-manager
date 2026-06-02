@@ -6,7 +6,7 @@
  * vilket garanterar att MongoDB-anslutningen finns på plats när
  * beforeEach/afterEach i testfilerna exekveras.
  * @author Robert Minushi <rm222xi@student.lnu.se>
- * @version v0.1.0
+ * @version v1.0.0
  */
 
 import { beforeAll, afterEach, afterAll } from 'vitest'

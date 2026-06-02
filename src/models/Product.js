@@ -1,7 +1,7 @@
 /**
  * @file Mongoose model for inventory products.
  * @author Robert Minushi <rm222xi@student.lnu.se>
- * @version v0.3.0
+ * @version v1.0.0
  */
 // BR-2: mongoose-history and mongoose-history-plugin were evaluated but not adopted.
 // Both rely on document-level hooks (pre save/remove) that are bypassed by the

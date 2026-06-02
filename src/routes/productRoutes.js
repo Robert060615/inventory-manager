@@ -1,7 +1,7 @@
 /**
  * @file Product routes — CRUD endpoints for inventory products.
  * @author Robert Minushi <rm222xi@student.lnu.se>
- * @version v0.3.0
+ * @version v1.0.0
  */
 
 import { Router } from 'express'

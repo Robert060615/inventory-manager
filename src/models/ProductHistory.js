@@ -1,7 +1,7 @@
 /**
  * @file Mongoose model for product change history (BR-2).
  * @author Robert Minushi <rm222xi@student.lnu.se>
- * @version v0.1.0
+ * @version v1.0.0
  */
 
 import mongoose from 'mongoose'
@@ -25,8 +25,12 @@ const productHistorySchema = new mongoose.Schema({
     ref: 'Product',
     required: true,
   },
-  // Cached so deleted products still have a readable name in the history log.
+  // Cached so deleted products still have a readable name/size in the history log.
   productName: {
+    type: String,
+    default: '',
+  },
+  productSize: {
     type: String,
     default: '',
   },

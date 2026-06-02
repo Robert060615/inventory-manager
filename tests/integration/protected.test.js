@@ -4,7 +4,7 @@
  * Verifierar att requireAuth-middleware omdirigerar oautentiserade anrop
  * till /auth/login för alla skyddade endpoints.
  * @author Robert Minushi <rm222xi@student.lnu.se>
- * @version v0.1.0
+ * @version v1.0.0
  */
 
 import { describe, it, expect } from 'vitest'

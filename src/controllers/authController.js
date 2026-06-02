@@ -1,7 +1,7 @@
 /**
  * @file Authentication controller — handles login, logout, and session management.
  * @author Robert Minushi <rm222xi@student.lnu.se>
- * @version v0.3.0
+ * @version v1.0.0
  */
 
 import bcrypt from 'bcryptjs'

@@ -1,7 +1,7 @@
 /**
  * @file Invite controller — handles user invitations via time-limited tokens.
  * @author Robert Minushi <rm222xi@student.lnu.se>
- * @version v0.3.0
+ * @version v1.0.0
  */
 
 import crypto from 'crypto'
