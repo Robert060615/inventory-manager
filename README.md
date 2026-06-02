@@ -41,7 +41,7 @@ cp .env.example .env
 # Edit .env and fill in MONGODB_URI and JWT_SECRET
 
 # 4. Seed the database with an initial admin user
-#    Copy seeds/seed.example.js to seeds/seed.js, fill in credentials, then:
+#    Set SEED_PASSWORD in .env (SEED_EMAIL defaults to admin@spiik.se), then:
 npm run seed
 
 # 5. Start the development server
