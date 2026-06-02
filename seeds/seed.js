@@ -11,6 +11,9 @@ if (!email || !password) {
   process.exit(1)
 }
 
+/**
+ * Seeds the database with an initial admin user from environment variables.
+ */
 async function seed() {
   await mongoose.connect(process.env.MONGODB_URI, { serverSelectionTimeoutMS: 3000 })
 
