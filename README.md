@@ -67,3 +67,28 @@ Tests use an in-memory MongoDB instance — no external database required.
 | `npm test` | Run the test suite (Vitest) |
 | `npm run lint` | Run ESLint |
 | `npm run seed` | Seed the database with an initial admin user |
+
+## Project status
+
+### Implemented
+- BR-1: Product CRUD — create, edit, delete, filter by category
+- BR-2: Change history log via mongoose-history — logs who, what, when with old/new values
+- BR-3: Undo function — revert updates, deletes and creates from history view
+- BR-4: Invite-only access control — no public registration, JWT auth with httpOnly cookies
+
+### What remains
+- Dashboard with inventory graphs and stock level visualization
+- CSV export
+- Integration with SPIIK's kiosk system
+
+### Development stage
+Final delivery (v1.0.0). All base requirements implemented and tested. No known bugs.
+
+### Test status
+- 33 automated tests (Vitest) — all passing
+- 11 manual test cases — all passing
+- CI/CD pipeline runs lint and tests on every push
+
+## License
+
+This project is part of the course 1DV613 at Linnaeus University.
