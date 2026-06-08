@@ -8,7 +8,6 @@ A web application for managing SPIIK student association's physical inventory �
 - **Change history** – Every update is logged with who changed what, when, and the old vs new value
 - **Undo changes** – Revert any logged change to restore the previous value
 - **Access control** – No public registration; new users are invited by existing board members via time-limited invite links
-- **Dashboard** – Overview of current inventory with warnings for low or zero stock
 
 ## Tech stack
 
